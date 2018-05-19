@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import TestList from '../containers/test-list';
 
 export default class App extends Component {
   render() {
     return (
-      <div>React simple starter</div>
+      <div className="jumbotron">
+        <h1>Тест на гармонический слух</h1>
+        <p className="lead">Прослушайте аудиозапись и укажите правильную гармонию</p>
+        <br/>
+        <TestList/>
+      </div>
     );
   }
 }
