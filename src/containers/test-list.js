@@ -39,15 +39,15 @@ class TestList extends Component {
         </div>
         <br/>
         <br/>
-        <div className="d-flex justify-content-between bd-highlight mb-3">
+        <div className="d-sm-flex justify-content-between bd-highlight mb-3">
           {this.props.test.choices.map((button, index) =>
             <div
               key={index}
-              className="bd-highlight"
+              className="bd-highlight choice-button"
             >
               <button
                 type="button"
-                className={"btn btn-lg btn-outline-primary"}
+                className={"btn btn-lg btn-outline-primary btn-block"}
                 onClick={() => this.props.checkAnswer(button.is_correct)}
               >{button.text}</button>
             </div>
@@ -55,7 +55,6 @@ class TestList extends Component {
         </div>
         {this.props.test.success === true && <div>Правильно!</div>}
         {this.props.test.success === false && <div>Не правильно!</div>}
-        <br/>
         <hr className="my-4"/>
         <button
           type="button"

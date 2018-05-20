@@ -4,7 +4,7 @@ import TestList from '../containers/test-list';
 export default class App extends Component {
   render() {
     return (
-      <div className="jumbotron">
+      <div>
         <h1>Тест на гармонический слух</h1>
         <p className="lead">Прослушайте аудиозапись и укажите правильную гармонию</p>
         <br/>

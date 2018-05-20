@@ -9,6 +9,9 @@
   }
 }
 
+.choice-button {
+  margin-bottom: 10px;
+}
 
 .success [correct=1] {
 
