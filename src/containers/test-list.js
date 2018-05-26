@@ -54,7 +54,7 @@ class TestList extends Component {
           )}
         </div>
         {this.props.test.success === true && <div>Правильно!</div>}
-        {this.props.test.success === false && <div>Не правильно!</div>}
+        {this.props.test.success === false && <div>Неправильно!</div>}
         <hr className="my-4"/>
         <button
           type="button"
