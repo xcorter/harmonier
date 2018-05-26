@@ -101,12 +101,27 @@ function getTest() {
   return test;
 }
 
-export default function (state = null, action) {
+const initialState = {
+  success: null,
+  current: null,
+  counter: 1,
+  successCounter: 0,
+  answered: false
+}
+
+export default function (state = initialState, action) {
   if (test === null) {
     test = getTest();
   }
   switch (action.type) {
     case 'CHECK_ANSWER':
+      if (!state.answered) {
+        state.counter++;
+        if (action.success) {
+          state.successCounter++;
+        }
+      }
+      state.answered = true;
       state.success = action.success;
       return {
         ...state,
@@ -114,7 +129,15 @@ export default function (state = null, action) {
       };
     case 'NEXT_TEST':
       test = getTest();
-      return test;
+      return {
+        ...state,
+        answered: false,
+        current: test,
+        success: null
+      };
   }
-  return test;
+  return {
+    ...state,
+    current: test
+  };
 }

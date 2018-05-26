@@ -7,7 +7,6 @@ export default class App extends Component {
       <div>
         <h1>Тест на гармонический слух</h1>
         <p className="lead">Прослушайте аудиозапись и укажите правильную гармонию</p>
-        <br/>
         <TestList/>
       </div>
     );

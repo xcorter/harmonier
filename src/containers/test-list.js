@@ -7,7 +7,7 @@ import nextTest from '../actions/action_next';
 class TestList extends Component {
   renderButton(item) {
     let success = false;
-    if (this.props.test.rightNumber == item.id) {
+    if (this.props.test.current.rightNumber == item.id) {
       success = true;
     }
     return (
@@ -34,13 +34,14 @@ class TestList extends Component {
     }
     return (
       <div success={this.props.test.success === true ? "success" : this.props.test.success === false ? "fail" : "" }>
+        <p className="lead">Попытки: {this.props.test.successCounter}/{this.props.test.counter}</p>
         <div className="audio-wrapper">
-          <audio controls src={this.props.test.source} type="audio/mpeg"></audio>
+          <audio controls src={this.props.test.current.source} type="audio/mpeg"></audio>
         </div>
         <br/>
         <br/>
         <div className="d-sm-flex justify-content-between bd-highlight mb-3">
-          {this.props.test.choices.map((button, index) =>
+          {this.props.test.current.choices.map((button, index) =>
             <div
               key={index}
               className="bd-highlight choice-button"
