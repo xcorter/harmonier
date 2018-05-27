@@ -1,103 +1,12 @@
+import {getChoices, getKeys} from '../choices';
+import {NEXT_TEST, CHANGE_KEY, CHECK_ANSWER} from "../constants/action_types";
+
 let test = null;
 
-function getTests() {
-  return [
-    {
-      "id": 1,
-      "source": "/audio/1.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": false, "text": "Тоника"},
-        {"is_correct": false, "text": "Доминанта"},
-        {"is_correct": true, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 2,
-      "source": "/audio/2.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": false, "text": "Тоника"},
-        {"is_correct": true, "text": "Доминанта"},
-        {"is_correct": false, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 3,
-      "source": "/audio/c_ton.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": true, "text": "Тоника"},
-        {"is_correct": false, "text": "Доминанта"},
-        {"is_correct": false, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 4,
-      "source": "/audio/d_ton.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": true, "text": "Тоника"},
-        {"is_correct": false, "text": "Доминанта"},
-        {"is_correct": false, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 5,
-      "source": "/audio/d_sub.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": false, "text": "Тоника"},
-        {"is_correct": false, "text": "Доминанта"},
-        {"is_correct": true, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 6,
-      "source": "/audio/d_dom.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": false, "text": "Тоника"},
-        {"is_correct": true, "text": "Доминанта"},
-        {"is_correct": false, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 7,
-      "source": "/audio/a_ton.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": true, "text": "Тоника"},
-        {"is_correct": false, "text": "Доминанта"},
-        {"is_correct": false, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 8,
-      "source": "/audio/a_sub.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": false, "text": "Тоника"},
-        {"is_correct": false, "text": "Доминанта"},
-        {"is_correct": true, "text": "Субдоминанта"}
-      ]
-    },
-    {
-      "id": 9,
-      "source": "/audio/a_dom.mp3",
-      "success": null,
-      "choices": [
-        {"is_correct": false, "text": "Тоника"},
-        {"is_correct": true, "text": "Доминанта"},
-        {"is_correct": false, "text": "Субдоминанта"}
-      ]
-    }
-  ]
-}
-
-function getTest() {
-  let tests = getTests();
-  let test = tests[Math.floor(Math.random() * tests.length)];
+function getTest(key) {
+  let tests = getChoices();
+  const filtered =  tests.filter(choice => !key || choice.key == key);
+  let test = filtered[Math.floor(Math.random() * filtered.length)];
   return test;
 }
 
@@ -106,7 +15,19 @@ const initialState = {
   current: null,
   counter: 1,
   successCounter: 0,
-  answered: false
+  answered: false,
+  keys: getKeys(),
+  currentKey: null
+}
+
+const createNewTest = (state) => {
+  test = getTest(state.currentKey);
+  return {
+    ...state,
+    answered: false,
+    current: test,
+    success: null
+  };
 }
 
 export default function (state = initialState, action) {
@@ -114,7 +35,7 @@ export default function (state = initialState, action) {
     test = getTest();
   }
   switch (action.type) {
-    case 'CHECK_ANSWER':
+    case CHECK_ANSWER:
       if (!state.answered) {
         state.counter++;
         if (action.success) {
@@ -127,14 +48,11 @@ export default function (state = initialState, action) {
         ...state,
         success: action.success
       };
-    case 'NEXT_TEST':
-      test = getTest();
-      return {
-        ...state,
-        answered: false,
-        current: test,
-        success: null
-      };
+    case NEXT_TEST:
+      return createNewTest(state);
+    case CHANGE_KEY:
+      state.currentKey = action.payload;
+      return createNewTest(state);
   }
   return {
     ...state,
