@@ -13,7 +13,7 @@ function getTest(key) {
 const initialState = {
   success: null,
   current: null,
-  counter: 1,
+  counter: 0,
   successCounter: 0,
   answered: false,
   keys: getKeys(),

@@ -34,7 +34,10 @@ class TestList extends Component {
     )
     return (
       <div success={this.props.test.success === true ? "success" : this.props.test.success === false ? "fail" : "" }>
-        <p className="lead">Попытки: {this.props.test.successCounter}/{this.props.test.counter}</p>
+        <p className="lead">
+          <span className="badge badge-primary">Всего ответов: {this.props.test.counter}</span><br/>
+          <span className="badge badge-success">Успешных ответов: {this.props.test.successCounter}</span><br/>
+        </p>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             <label className="input-group-text" htmlFor="key">Тональность</label>
