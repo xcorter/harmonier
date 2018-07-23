@@ -26,12 +26,6 @@ class TestList extends Component {
   }
 
   render() {
-    let successObj;
-    if (this.props.test.success === true) {
-      successObj = "success!!";
-    } else if (this.props.test.success === false) {
-      successObj = "fail!!";
-    }
     const keys = this.props.test.keys.map(key =>
       <option
         key={key}

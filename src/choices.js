@@ -242,3 +242,7 @@ export function getChoices() {
 export function getKeys() {
   return _(getChoices()).map('key').uniq().value();
 }
+
+export function getFuncFromChoice(choice) {
+  return _(choice.choices.filter(func => func.is_correct)).head().text;
+}
